@@ -5267,39 +5267,6 @@
     ]
   },
   {
-    "name": "Баннераная система",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Баннера для категорий"
-      },
-      {
-        "type": "collection",
-        "id": "collection_for_banner",
-        "info": "Выберите категорию для баннера",
-        "label": "Категория"
-      },
-      {
-        "type": "url",
-        "id": "url_for_banner",
-        "info": "Выберите ссылку для баннера",
-        "label": "Ссылка , на которую перейдет клиент при клике"
-      },
-      {
-        "type": "image",
-        "id": "image_for_banner_desctop",
-        "info": "Выберите картинку для баннера(версия для компьютеров)",
-        "label": "Картинка(компьютер)"
-      },
-      {
-        "type": "image",
-        "id": "image_for_banner_mobile",
-        "info": "Выберите картинку для баннера(версия для телефонов)",
-        "label": "Картинка(телефон)"
-      }
-    ]
-  },
-  {
     "name": "Product Colors and Textures",
     "settings": [
       {

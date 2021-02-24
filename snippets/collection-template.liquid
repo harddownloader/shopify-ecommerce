@@ -18,6 +18,7 @@
         </div>{%- endif -%}
         
         <div class="content-indent container-fluid-custom-mobile-padding-02">
+          {% section 'banners-system' %}
 
           {%- paginate collection.products by current_pagination_limit -%}
 
