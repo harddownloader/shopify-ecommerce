@@ -1,11 +1,29 @@
-{%- assign item = section.settings -%}
-<div class="">
-  <div class="" style="background: {{ item.bg_color }};">
-    <a href="{{ item.url_for_banner }}" class="">
-      {% if item.image_for_banner_desctop != blank %}<img src="{{ item.image_for_banner_desctop | img_url: '1024x' }}" alt="{{ item.image_for_banner_desctop.alt }}">{% endif %}
-    </a>
+{% for block in section.blocks %}
+  {% comment %} block - {{ block.settings.collection_for_banner }}
+  collection - {{ collection.handle }} {% endcomment %}
+
+  {% if collection.handle == block.settings.collection_for_banner %}
+  <div class="banners-system-wrap">
+    <div class="banners-system">
+      <a href="{{ item.url_for_banner }}" class="">
+        {% if block.settings.image_for_banner_mobile != blank and block.settings.image_for_banner_desctop != blank %}
+      
+        <picture>
+          <source media="(max-width: 799px)" srcset="{{ block.settings.image_for_banner_mobile | img_url: '320x' }}">
+          <source media="(min-width: 800px)" srcset="{{ block.settings.image_for_banner_desctop | img_url: '1024x' }}">
+          <img
+              class="banner-item"
+              src="{{ block.settings.image_for_banner_desctop | img_url: '1024x' }}"
+              alt="{{ block.settings.image_for_banner_mobile.alt}}"
+          >
+        </picture>
+        {% endif %}
+        
+      </a>
+    </div>
   </div>
-</div>
+  {% endif %}
+{% endfor %}
 
 
 {% schema %}
@@ -15,30 +33,38 @@
       {
         "type": "header",
         "content": "Баннера для категорий"
-      },
+      }
+    ],
+  	"blocks": [
       {
-        "type": "collection",
-        "id": "collection_for_banner",
-        "info": "Выберите категорию для баннера",
-        "label": "Категория"
-      },
-      {
-        "type": "url",
-        "id": "url_for_banner",
-        "info": "Выберите ссылку для баннера",
-        "label": "Ссылка , на которую перейдет клиент при клике"
-      },
-      {
-        "type": "image_picker",
-        "id": "image_for_banner_desctop",
-        "info": "Выберите картинку для баннера(версия для компьютеров)",
-        "label": "Картинка(компьютер)"
-      },
-      {
-        "type": "image_picker",
-        "id": "image_for_banner_mobile",
-        "info": "Выберите картинку для баннера(версия для телефонов)",
-        "label": "Картинка(телефон)"
+        "type": "select",
+        "name": "Баннер для категорий",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection_for_banner",
+            "info": "Выберите категорию для баннера",
+            "label": "Категория"
+          },
+          {
+            "type": "url",
+            "id": "url_for_banner",
+            "info": "Выберите ссылку для баннера",
+            "label": "Ссылка , на которую перейдет клиент при клике"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_for_banner_desctop",
+            "info": "Выберите картинку для баннера(версия для компьютеров)",
+            "label": "Картинка(компьютер)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_for_banner_mobile",
+            "info": "Выберите картинку для баннера(версия для телефонов)",
+            "label": "Картинка(телефон)"
+          }
+        ]
       }
     ]
   }
