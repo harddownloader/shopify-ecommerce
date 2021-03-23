@@ -6,11 +6,55 @@
     {%- if links == blank -%}
     <a href="//shopify.com/admin/links" rel="nofollow"><u>Create and select collections linklist in navigation</u></a> and select created linklist in the <strong>Customize Theme > Sidebar Collections Tab</strong>
     {%- else -%}
-    <ul class="tt-list-row">
+    {% comment %} <ul class="tt-list-row">
       {%- for link in linklists[links].links -%}
       <li{% if link.active %} class="active"{% endif %}><a href="{{ link.url }}">{{ link.title }}</a></li>
       {%- endfor -%}
-    </ul>
+    </ul> {% endcomment %}
+    {% assign menu = linklists.sidebarmenu %}
+      <ul class="tt-list-row">
+      {% comment %} {{ menu.title }}: {{ menu.levels }} {% endcomment %}
+      {% for link in menu.links %}
+        {% comment %} {{ link.title }}: {{ link.levels }} {% endcomment %}
+        {% comment %} c-t-{{ collection.title }} : l_t-{{ link.title }} : l-l-{{ link.levels }} {% endcomment %}
+        {%- if link.title == collection.title -%}
+          {{ link.title }}
+          {% for sub_link in link.links %}
+            {% comment %} {{ sub_link.title }}: {{ sub_link.levels }} {% endcomment %}
+            <li{% if sub_link.active %} class="active category_sidebar_link_item"{% else %} class="category_sidebar_link_item"{% endif %}><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></li>
+            {% for sub_sub_link in sub_link.links %}
+              <ul class="category_sidebar_item">
+                {% comment %} {{ sub_sub_link.title }}: {{ sub_sub_link.levels }} {% endcomment %}
+                <li{% if sub_sub_link.active %} class="active category_sidebar_link_item"{% else %} class="category_sidebar_link_item"{% endif %}><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+              </ul>
+            {% endfor %} <!--/sub_sub_link-->
+          {% endfor %} <!--/sub_link-->
+
+        {% else %}
+          {% for sub_link in link.links %}
+            {%- if sub_link.title == collection.title -%}
+              {% comment %} {{ sub_link.title }}: {{ sub_link.levels }} {% endcomment %}
+              <li{% if sub_link.active %} class="active"{% endif %}><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></li>
+              {% for sub_sub_link in sub_link.links %}
+                <ul class="category_sidebar_item">
+                  {% comment %} {{ sub_sub_link.title }}: {{ sub_sub_link.levels }} {% endcomment %}
+                  <li{% if sub_sub_link.active %} class="active category_sidebar_link_item"{% else %} class="category_sidebar_link_item"{% endif %}><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+                </ul>
+              {% endfor %} <!--/sub_sub_link-->
+            {% else %}
+              {% for sub_sub_link in sub_link.links %}
+                {%- if sub_sub_link.title == collection.title -%}
+                  <ul class="category_sidebar_item">
+                    {% comment %} {{ sub_sub_link.title }}: {{ sub_sub_link.levels }} {% endcomment %}
+                    <li{% if sub_sub_link.active %} class="active category_sidebar_link_item"{% else %} class="category_sidebar_link_item"{% endif %}><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+                  </ul>
+                {%- endif -%}
+              {% endfor %} <!--/sub_sub_link-->
+            {%- endif -%}
+          {% endfor %} <!--/sub_link-->
+        {%- endif -%}
+      {% endfor %} <!--/menu.links-->
+      </ul>
     {%- endif -%}
   </div>
 </div>
