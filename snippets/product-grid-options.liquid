@@ -123,12 +123,10 @@
 <ul>
 {% for tag in collection.all_tags %}
     {% if current_tags contains tag %}
-        {% assign need_propduct_tag =  tag | split: ',' | last | split: ':' | last %}
+        {% assign need_propduct_tag =  _tag | split: ',' | last | split: ':' | last | downcase %}
   		{% assign need_filter_tag = tag | downcase %}
-        _tag-{{_tag}}
-  		_tag split-{{_tag | split: ',' | last | split: ':' | last }}
-  		tag-{{tag | downcase}}
-  
+
+  		 _tag-{{_tag}}
   		need_propduct_tag-{{need_propduct_tag}}
   		need_filter_tag-{{need_filter_tag}}
   
