@@ -120,28 +120,19 @@
 	  {%- assign _tag = ',' | append: _tag | append: ':' -%}
 	  {%- capture curcol -%}{%- if colors contains _tag -%}{{ colors | split: _tag | last | split: ',' | first | strip }}{%- else -%}{%- endif -%}{%- endcapture -%}
       
-<ul>
-{% for tag in collection.all_tags %}
-    {% if current_tags contains tag %}
-        {% assign need_propduct_tag =  _tag | split: ',' | last | split: ':' | last | downcase %}
-  		{% assign need_filter_tag = tag | downcase %}
 
-  		 _tag-{{_tag}}
-  		need_propduct_tag-{{need_propduct_tag}}
-  		need_filter_tag-{{need_filter_tag}}
+
+      <li{% for tag in collection.all_tags %}
+   			 {% if current_tags contains tag %}
+       			 {% assign need_propduct_tag =  _tag | split: ',' | last | split: ':' | last | downcase %}
+  				{% assign need_filter_tag = tag | downcase %}
   
-        {% if need_propduct_tag == need_filter_tag %}
-          <li class="active">{{ tag | link_to_remove_tag: tag | downcase }}</li>
-        {% endif %}
+    		    {% if need_propduct_tag == need_filter_tag %}
+  					class="active"
+       			 {% endif %}
   
-<!--     { % else % } -->
-<!--           <li>{ { tag | link_to_add_tag: tag } }</li> -->
-    {% endif %}
-{% endfor %}
-</ul>
-
-
-      <li{% if variant.id == pr_variant.id %} class="active"{% endif %}
+   			 {% endif %}
+		{% endfor %}
           data-availability="{{ check_opt_ava }}"
           data-variant_availability="{{ variant.available }}"
           data-tag="{{ _handle | replace: '"', '' }}"
