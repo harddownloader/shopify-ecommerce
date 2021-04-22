@@ -119,20 +119,30 @@
 
 	  {%- assign _tag = ',' | append: _tag | append: ':' -%}
 	  {%- capture curcol -%}{%- if colors contains _tag -%}{{ colors | split: _tag | last | split: ',' | first | strip }}{%- else -%}{%- endif -%}{%- endcapture -%}
-      <ul>
+      
+<ul>
 {% for tag in collection.all_tags %}
     {% if current_tags contains tag %}
-        {% if _tag contains tag %}
-          <li class="active">{{ tag | link_to_remove_tag: tag }}</li>
+        {% assign need_propduct_tag =  tag | split: ',' | last | split: ':' | last %}
+  		{% assign need_filter_tag = tag | downcase %}
+        _tag-{{_tag}}
+  		_tag split-{{_tag | split: ',' | last | split: ':' | last }}
+  		tag-{{tag | downcase}}
+  
+  		need_propduct_tag-{{need_propduct_tag}}
+  		need_filter_tag-{{need_filter_tag}}
+  
+        {% if need_propduct_tag == need_filter_tag %}
+          <li class="active">{{ tag | link_to_remove_tag: tag | downcase }}</li>
         {% endif %}
-<!--     { % else % }
-          <li>{ { tag | link_to_add_tag: tag } }</li> -->
+  
+<!--     { % else % } -->
+<!--           <li>{ { tag | link_to_add_tag: tag } }</li> -->
     {% endif %}
 {% endfor %}
 </ul>
-      tag-{{tag}}
-      _tag-{{_tag}} <!--это название тега цвета у картинки-- >
-<!-- 	  pr_variant-{{pr_variant.id}} -->
+
+
       <li{% if variant.id == pr_variant.id %} class="active"{% endif %}
           data-availability="{{ check_opt_ava }}"
           data-variant_availability="{{ variant.available }}"
