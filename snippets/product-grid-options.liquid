@@ -111,6 +111,7 @@
       {%- endif -%}
 	  {%- capture texture_style -%}{%- if texture contains '100x.' -%}{{ texture }}{%- elsif texture != '' -%}{{ texture | asset_url }}{%- endif -%}{%- endcapture -%}
 	  {%- capture tagborder -%}{% if tag == settings.shopby_color_filter_border %} border{% endif %}{%- endcapture -%}
+      {% comment %} settings.shopby_color_filter_border- {{settings.shopby_color_filter_border}} {% endcomment %}
 
 	  {%- assign _handle = tag | replace: ' ', '' -%}
 	  
@@ -119,20 +120,7 @@
 
 	  {%- assign _tag = ',' | append: _tag | append: ':' -%}
 	  {%- capture curcol -%}{%- if colors contains _tag -%}{{ colors | split: _tag | last | split: ',' | first | strip }}{%- else -%}{%- endif -%}{%- endcapture -%}
-      
-
-
-      <li{% for tag in collection.all_tags %}
-   			 {% if current_tags contains tag %}
-       			 {% assign need_propduct_tag =  _tag | split: ',' | last | split: ':' | last | downcase %}
-  				{% assign need_filter_tag = tag | downcase %}
-  
-    		    {% if need_propduct_tag == need_filter_tag %}
-  					class="active"
-       			 {% endif %}
-  
-   			 {% endif %}
-		{% endfor %}
+      <li{% if variant.id == pr_variant.id %} class="active"{% endif %}
           data-availability="{{ check_opt_ava }}"
           data-variant_availability="{{ variant.available }}"
           data-tag="{{ _handle | replace: '"', '' }}"
